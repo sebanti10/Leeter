@@ -1,24 +1,25 @@
-// #95c7f8 light blue
-// #245e7c dark blue
-// #dedbec grey
-// #f9f6f9 white
-// #070c0f black
 let console = chrome.extension.getBackgroundPage().console;
+const problem = {};
 
+// returns the current date in format: 'Mon dd, yyyy'
 const currentDate = () => {
     const date = new Date();
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
-
+// generate problem object with releavnt data
 const trackData = (response, tabURL) => {
-    console.log(response);
+    const [probNo, probTitle] = response.problemTitle.split('.');
+
+    const problemNo = document.querySelector('.problem-no');
+    problemNo.innerText = 'Problem No.: ' + probNo;
+
     const problemTitle = document.querySelector('.problem-title');
-    problemTitle.innerText = response.problemTitle;
+    problemTitle.innerText = 'Problem Title: ' + probTitle;
 
     const difficulty = document.querySelector('.difficulty');
-    difficulty.innerText = response.difficulty;
+    difficulty.innerText = 'Difficulty: ' + response.difficulty;
 
     const tagList = document.querySelector('.tags');
     if (tagList.children.length === 0) {
@@ -31,34 +32,108 @@ const trackData = (response, tabURL) => {
         });
     }
 
-    const tab = document.querySelector('.tab-url');
-    tab.innerText = tabURL;
+    // const tab = document.querySelector('.tab-url');
+    // tab.innerText = tabURL;
 
-    const createdDate = document.querySelector('.created-date');
-    createdDate.innerText = currentDate();
+    // const createdDate = document.querySelector('.created-date');
+    // createdDate.innerText = currentDate();
 
 };
 
-// const handleSubmit = async (e, problem) => {
-//     e.preventDefault();
-//     try {
-//         const res = await axios.post('localhost:3000/', problem);
-//         const success = document.querySelector('.success');
-//         success.style.display = "none";
-//         success.textContent = res.data;
-//     } catch (e) {
-//         const error2 = document.querySelector('.error');
-//         error.style.display = "none";
-//         error.textContent = "Oops!";
-//     }
-// }
+// fetches chrome storage sync data
+async function fetchStorageData() {
+    let leetDataPromise = new Promise((resolve, reject) => {
+        chrome.storage.sync.get({
+            'leetData': []
+        }, data => {
+            resolve(data.leetData);
+        });
+    });
 
-function saveItem(leetDataStr) {
-    localStorage.setItem('leetDataItems', leetDataStr);
+    const leetData = await leetDataPromise;
+    return leetData;
 }
 
-const leetData = [];
-const problem = {};
+// add new problem object to 'leetData' array
+function saveData(problem) {
+    // First fetch the existing data, empty array in default case
+    fetchStorageData().then(leetData => {
+        let repeated = false;
+
+        for (let i = 0; i < leetData.length; i++) {
+            if (leetData[i].problemNo === problem.problemNo) {
+                repeated = true;
+                break;
+            }
+        }
+
+        // Now update 'leetData' array with the new 'problem' object
+        if (!repeated) {
+            updateData(leetData, problem);
+            document.querySelector('.message').innerText = 'Your data was successfully added!';
+            hideMessage();
+        } else {
+            document.querySelector('.message').innerText = 'Oops, this data has already been added before!';
+            hideMessage();
+        }
+    });
+}
+
+// Update 'leetData' array with 'problem' object
+function updateData(leetData, problem) {
+    leetData.push(problem);
+
+    //then call the set to update with modified value
+    chrome.storage.sync.set({
+        'leetData': leetData
+    }, () => console.log('Saved!', leetData));
+}
+
+// Download only possible if leetData is not empty
+function downloadData() {
+    fetchStorageData().then(leetData => {
+        if (leetData.length > 0) {
+            console.log(leetData);
+
+            let blob = new Blob([JSON.stringify(leetData)], {
+                type: 'text/plain'
+            });
+
+            // console.log(blob);
+
+            let url = URL.createObjectURL(blob);
+
+            setTimeout(() => {
+                chrome.downloads.download({
+                    url
+                });
+                console.log("Done!!");
+            }, 1000);
+        }
+    });
+}
+
+// Hides message after 3 seconds
+function hideMessage() {
+    setTimeout(function () {
+        document.querySelector('.message').classList.toggle('hidden');
+    }, 1000);
+}
+
+function resetData() {
+    console.log('Before:');
+    chrome.storage.sync.get(result => console.log(result));
+
+    // Clears chrome storage sync
+    chrome.storage.sync.clear();
+
+    const success = document.querySelector('.message');
+    success.innerText = 'All your data has been reset now!';
+    hideMessage();
+
+    console.log('After:');
+    chrome.storage.sync.get(result => console.log(result));
+}
 
 chrome.tabs.getSelected(null, tab => {
     if (tab.url.includes('https://leetcode.com/problems')) {
@@ -73,14 +148,13 @@ chrome.tabs.getSelected(null, tab => {
                 trackData(response, tab.url);
             });
 
-            problem.problemTitle = response.problemTitle;
+            const [problemNo, problemTitle] = response.problemTitle.split('.');
+            problem.problemNo = parseInt(problemNo);
+            problem.problemTitle = problemTitle;
             problem.difficulty = response.difficulty;
             problem.tags = response.tags;
             problem.tabURL = tab.url;
             problem.createdDate = currentDate();
-
-            leetData.push(problem);
-            const leetDataStr = JSON.stringify(leetData);
 
             // Add problems to Leeter
             // document.querySelector('.add-leeter').addEventListener('click', async () => {
@@ -107,40 +181,26 @@ chrome.tabs.getSelected(null, tab => {
             // });
 
             document.querySelector('.add-leeter').addEventListener('click', async () => {
-
                 // post each 'problem' object
-                try {
-                    saveItem(leetDataStr);
-                    const success = document.querySelector('.message');
-                    success.innerText = 'Done!';
-                } catch (e) {
-                    console.log(e);
-                    const error = document.querySelector('.message');
-                    error.innerText = 'Not OK';
-                }
+                saveData(problem);
+            });
 
+            // triggers the leeter homepage to open
+            document.querySelector('.checkout-leeter').addEventListener('click', () => {
+                chrome.tabs.create({
+                    url: 'dashboard.html'
+                });
+            });
+
+            // Reset all chrom storage sync data
+            document.querySelector('.reset').addEventListener('click', () => {
+                resetData();
             });
 
             // Download only if any problem has been added to the leetData array by now
-            if (leetData.length > 0) {
-                console.log(leetData);
-
-                let blob = new Blob([leetDataStr], {
-                    type: 'text/plain'
-                });
-                console.log(blob);
-
-                let url = URL.createObjectURL(blob);
-
-                document.querySelector('.download').addEventListener('click', () => {
-                    setTimeout(() => {
-                        chrome.downloads.download({
-                            url
-                        });
-                        console.log("Done!!");
-                    }, 1000);
-                });
-            }
+            document.querySelector('.download').addEventListener('click', () => {
+                downloadData();
+            });
         });
     }
 });

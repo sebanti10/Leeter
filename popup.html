@@ -8,6 +8,7 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/popup.css">
+
 </head>
 
 <body>
@@ -18,35 +19,43 @@
     </div>
   </div>
 
-  <div class="leet-container">
-    <div class="notify-form">
-      <label for="text">Problem Approach</label>
-      <textarea name="text" id="notify-text" placeholder="Write down your thoughts on the problem here"></textarea>
-    </div>
+  <p class="message"></p>
 
-    <div class="problem">
-      <p class="problem-title"></p>
-      <p class="difficulty"></p>
-      <ul class="tags"></ul>
-      <p class="tab-url"></p>
-      <p class="created-date"></p>
-      <p class="message"></p>
+  <div class="leet-container">
+
+    <div id="problem-form">
+      <form action="">
+        <p class="problem-no"></p>
+        <p class="problem-title"></p>
+        <p class="difficulty"></p>
+        <ul class="tags"></ul>
+        <p class="tab-url"></p>
+        <p class="created-date"></p>
+        <!-- <div class="notify-form">
+          <label for="text">Problem Approach</label>
+          <textarea name="text" id="notify-text" placeholder="Write down your thoughts on the problem here"></textarea>
+        </div> -->
+      </form>
     </div>
 
     <button class="button track">Track</button>
     <button class="button primary add-leeter"> Add to Leeter! </button>
 
-    <button class="button primary checkout-leeter"> Checkout Leeter! </button>
+    <button class="button primary checkout-leeter"> View Leeter </button>
 
     <button class="button primary download">Download</button>
-    <button class="button reset">
-      Reset
-    </button>
+    <button class="button reset">Reset All Your Data</button>
 
   </div>
 
   </div>
-  <script src="js/index.js"></script>
+  <script src="js/index.js">
+    const timeout = document.getElementsByClassName('message')
+    setTimeout(hideElement, 1000) //milliseconds until timeout//
+    function hideElement() {
+      timeout.style.display = 'none'
+    }
+  </script>
 </body>
 
 </html>

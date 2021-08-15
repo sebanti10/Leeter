@@ -17,8 +17,25 @@ body {
 
 .heading h1 {
   text-align: center;
-  margin: 20px auto;
+  margin: 10px auto;
   font-size: 25px;
+}
+
+.leet-container {
+  margin: 10px 2px;
+  padding: 50px;
+}
+
+.hidden {
+  display: none;
+}
+
+.message {
+  margin: 10px 2px;
+  top: 50%;
+  color: rgb(228, 168, 4);
+  text-align: center;
+  font-size: 15px;
 }
 
 .button {
@@ -44,11 +61,6 @@ body {
   margin: 10px 0 5px 10px;
 }
 
-.notify-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
 
 .button:hover {
   background: rgba( 66, 133, 244, .04 );
@@ -82,3 +94,10 @@ textarea {
 .notify-buttons p {
   margin: 10px 0 5px 10px;
 }
+
+
+/* #95c7f8 light blue
+#245e7c dark blue
+#dedbec grey
+#f9f6f9 white
+#070c0f black */
