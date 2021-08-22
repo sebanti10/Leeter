@@ -19,21 +19,21 @@ With Leeter you can:
 ## Features
 
 1. Open the 'Leeter' chrome extension and click on 'Track'.
-   ![Leeter Extension](leeter-track.png)
+   ![Leeter Extension](assets/leeter-track.png)
 
 <br><br>
 
 2. Get a quick overview of the problem and optionally include any additional notes/ problem approach etc. that you would like to keep in mind, and then click on 'Add to Leeter'.
-   ![Leeter Extension](add-to-leeter.png)
-   ![Leeter Extension](leeter-duplicate-data.png)
+   ![Leeter Extension](assets/add-to-leeter.png)
+   ![Leeter Extension](assets/leeter-duplicate-data.png)
    <br><br>
 
 3. Get all your data organized in a neat, date-wise manner with difficulty level, problem tags mentioned alongside your personal notes! You can also click on a problem title to directly be redirected to the problem page in a new tab.
-   ![Leeter Extension](leeter-view.png)
+   ![Leeter Extension](assets/leeter-view.png)
    <br><br>
 
 4. Reset your data logs any time!
-   ![Leeter Extension](leeter-reset.png)
+   ![Leeter Extension](assets/leeter-reset.png)
 
 <br><br>
 
