@@ -26,5 +26,6 @@
   ],
   "background": {
     "scripts": ["js/background.js"]
-  }
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js 'unsafe-inline'; object-src 'self'"
 }

@@ -21,6 +21,9 @@ const trackData = (response, tabURL) => {
     const difficulty = document.querySelector('.difficulty');
     difficulty.innerText = 'Difficulty: ' + response.difficulty;
 
+    const tagDetails = document.querySelector('.tag-details');
+    tagDetails.innerText = 'Tags:';
+
     const tagList = document.querySelector('.tags');
     if (tagList.children.length === 0) {
         response.tags.forEach(tag => {
@@ -69,6 +72,9 @@ function saveData(problem) {
 
         // Now update 'leetData' array with the new 'problem' object
         if (!repeated) {
+            const textarea = document.getElementById('approach');
+            console.log(textarea.value);
+            problem.approach = textarea.value;
             updateData(leetData, problem);
             document.querySelector('.message').innerText = 'Your data was successfully added!';
             hideMessage();
@@ -146,6 +152,7 @@ chrome.tabs.getSelected(null, tab => {
             // show data dump upon clickiing 'Track' button
             document.querySelector('.track').addEventListener('click', () => {
                 trackData(response, tab.url);
+                document.querySelector('.problem-form').classList.toggle('hidden');
             });
 
             const [problemNo, problemTitle] = response.problemTitle.split('.');

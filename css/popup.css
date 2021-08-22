@@ -2,6 +2,7 @@ body {
   width: 400px;
   height: 400px;
   background-color: hsl(50, 100%, 99%);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* .heading {
@@ -22,8 +23,8 @@ body {
 }
 
 .leet-container {
-  margin: 10px 2px;
-  padding: 50px;
+  margin: 5px 20px;
+  padding: 20px 30px;
 }
 
 .hidden {
@@ -38,14 +39,20 @@ body {
   font-size: 15px;
 }
 
+.problem-form {
+  font-family: Roboto, system-ui, sans-serif;
+  size: 10%;
+}
+
 .button {
   font-family: Roboto, system-ui, sans-serif;
   align-items: center;
-  border: 1px solid rgb( 218, 220, 224 );
+  border: 1px solid rgb(218, 220, 224);
   border-radius: 4px;
   box-sizing: border-box;
   /* color: rgb( 26, 115, 232 ); */
-  color: rgb(240, 146, 6);;
+  color: rgb(240, 146, 6);
+  ;
   cursor: pointer;
   display: inline-flex;
   flex-shrink: 0;
@@ -63,7 +70,7 @@ body {
 
 
 .button:hover {
-  background: rgba( 66, 133, 244, .04 );
+  background: rgba(66, 133, 244, .04);
   border-color: 210, 227, 252;
 }
 
@@ -78,16 +85,17 @@ body {
 .button.primary:hover {
   /* background: rgba( 26, 115, 232, 0.9 ); */
   background: rgb(170, 104, 5);
-  box-shadow: 0 1px 2px 0 rgba( 66, 133, 244, .3),
-  0 1px 3px 1px rgba( 66, 133, 244, .15);
+  box-shadow: 0 1px 2px 0 rgba(66, 133, 244, .3),
+    0 1px 3px 1px rgba(66, 133, 244, .15);
 }
 
 textarea {
-  border: 2px solid rgba( 26, 115, 232, 0.4 );
+  border: 2px solid rgba(26, 115, 232, 0.4);
   padding: 8px;
   border-radius: 4px;
   display: block;
-  width: 224px;
+  width: 300px;
+  height: 100px;
   margin-top: 5px;
 }
 

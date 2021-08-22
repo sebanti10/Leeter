@@ -24,6 +24,44 @@ body {
     display: none;
 }
 
+.approach {
+    margin-top: 1%;
+}
+
+.difficulty {
+    float: right;
+    margin-top: 2%;
+    padding: 0.8%;
+    right: 50%;
+}
+
+.tags {
+    margin-top: 2%;
+}
+
+.tag {
+    margin-right: 2%;
+    padding: 0.9%;
+    size: 15%;
+}
+
+a {
+    color: inherit;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+}
+
+
 .button {
     font-family: Roboto, system-ui, sans-serif;
     align-items: center;

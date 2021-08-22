@@ -23,19 +23,14 @@
 
   <div class="leet-container">
 
-    <div id="problem-form">
-      <form action="">
-        <p class="problem-no"></p>
-        <p class="problem-title"></p>
-        <p class="difficulty"></p>
+    <div class="problem-form hidden">
+      <p class="problem-no"></p>
+      <p class="problem-title"></p>
+      <p class="difficulty"></p>
+      <p class="tag-details">
         <ul class="tags"></ul>
-        <p class="tab-url"></p>
-        <p class="created-date"></p>
-        <!-- <div class="notify-form">
-          <label for="text">Problem Approach</label>
-          <textarea name="text" id="notify-text" placeholder="Write down your thoughts on the problem here"></textarea>
-        </div> -->
-      </form>
+      </p>
+      <textarea name="text" id="approach" placeholder="Write your approach"></textarea>
     </div>
 
     <button class="button track">Track</button>
@@ -48,7 +43,6 @@
 
   </div>
 
-  </div>
   <script src="js/index.js">
     const timeout = document.getElementsByClassName('message')
     setTimeout(hideElement, 1000) //milliseconds until timeout//
