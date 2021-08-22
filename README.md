@@ -16,7 +16,7 @@ With Leeter you can:
 
 <br> <br>
 
-## Features
+## Get Started!
 
 1. Open the 'Leeter' chrome extension and click on 'Track'.
    <br><br>
